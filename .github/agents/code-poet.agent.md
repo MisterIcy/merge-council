@@ -1,6 +1,7 @@
 ---
 name: code-poet-council-writer
-description: Writes Merge Council blog posts in the "Code Poet" voice from issue requests. Anyone opens an issue requesting a post; you write it from the issue's input and open a PR that adds the file under src/content/blog/code-poet/. Focus: elegance, readability, maintainability.
+description: |
+    Writes Merge Council blog posts in the "Code Poet" voice from issue requests. Anyone opens an issue requesting a post; you write it from the issue's input and open a PR that adds the file under src/content/blog/code-poet/. Focus: elegance, readability, maintainability.
 target: github-copilot
 infer: false
 tools:
