@@ -1,0 +1,63 @@
+# Merge Council — Council Post pipeline
+#
+# When an issue is opened with the council-post label, the issue is assigned to
+# Copilot so Copilot can write the post and open a PR. No OpenAI/Anthropic calls in CI.
+#
+# Optional secret: COPILOT_ASSIGNEE — GitHub username to assign (e.g. bot or repo owner).
+# If unset, the issue is assigned to the repository owner.
+
+name: Council Post
+
+on:
+  issues:
+    types: [opened]
+  workflow_dispatch:
+    inputs:
+      issue_id:
+        description: "Issue number to assign to Copilot (admin trigger). Leave empty when triggered by issue open."
+        required: false
+        type: number
+
+jobs:
+  assign-to-copilot:
+    name: Assign issue to Copilot
+    runs-on: ubuntu-latest
+    if: |
+      (github.event_name == 'workflow_dispatch') ||
+      (github.event_name == 'issues' && contains(github.event.issue.labels.*.name, 'council-post'))
+    permissions:
+      issues: write
+      contents: read
+
+    steps:
+      - name: Resolve issue number
+        id: issue
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            if [ -z "${{ github.event.inputs.issue_id }}" ]; then
+              echo "::error::Manual run requires an issue ID (workflow_dispatch input)."
+              exit 1
+            fi
+            echo "number=${{ github.event.inputs.issue_id }}" >> $GITHUB_OUTPUT
+          else
+            echo "number=${{ github.event.issue.number }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Assign issue to Copilot
+        id: assign
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE_NUM: ${{ steps.issue.outputs.number }}
+          COPILOT_ASSIGNEE: ${{ secrets.COPILOT_ASSIGNEE }}
+          REPO_OWNER: ${{ github.repository_owner }}
+        run: |
+          assignee="${COPILOT_ASSIGNEE:-$REPO_OWNER}"
+          gh issue edit "$ISSUE_NUM" --repo "${{ github.repository }}" --add-assignee "$assignee"
+          echo "Assigned issue #$ISSUE_NUM to $assignee"
+
+      - name: Comment on issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE_NUM: ${{ steps.issue.outputs.number }}
+        run: |
+          gh issue comment "$ISSUE_NUM" --repo "${{ github.repository }}" --body "This Council Post request has been assigned to Copilot. Copilot will draft the post and open a PR."
