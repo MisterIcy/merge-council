@@ -1,6 +1,7 @@
 ---
 import CouncilLayout from "../layouts/CouncilLayout.astro";
 import PostCard from "../components/PostCard.astro";
+import { path } from "../lib/url";
 import { getCollection } from "astro:content";
 
 const allPosts = await getCollection("blog", ({ data }) => data.draft !== true);
@@ -35,13 +36,13 @@ const recentPosts = posts.slice(0, 5);
       </p>
       <nav class="mt-8 flex flex-wrap gap-4" aria-label="Primary">
         <a
-          href="/about"
+          href={path("/about")}
           class="inline-flex items-center rounded-lg border border-zinc-600/60 bg-zinc-800/50 px-4 py-2.5 text-sm font-medium text-zinc-200 transition hover:border-cyan-500/50 hover:bg-zinc-800 hover:text-cyan-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400"
         >
           About the Council
         </a>
         <a
-          href="/blog"
+          href={path("/blog")}
           class="inline-flex items-center rounded-lg border border-cyan-500/40 bg-cyan-500/10 px-4 py-2.5 text-sm font-medium text-cyan-400 transition hover:bg-cyan-500/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400"
         >
           All posts

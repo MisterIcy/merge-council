@@ -1,6 +1,7 @@
 ---
 import CouncilLayout from "../layouts/CouncilLayout.astro";
 import { personas } from "../data/personas";
+import { path } from "../lib/url";
 ---
 
 <CouncilLayout
@@ -59,7 +60,7 @@ import { personas } from "../data/personas";
       <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {personas.map((p) => (
           <a
-            href={`/blog/${p.id}`}
+            href={path(`/blog/${p.id}`)}
             class="group flex flex-col rounded-xl border border-zinc-800 bg-zinc-900/50 p-5 transition hover:border-cyan-500/40 hover:bg-zinc-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400"
             style={`--card-accent: ${p.theme.accent}`}
           >

@@ -9,15 +9,16 @@ export async function GET(context: { site: string | undefined }) {
     return db.getTime() - da.getTime();
   });
 
+  const site = context.site ?? "https://mistericy.github.io/merge-council/";
   return rss({
     title: "Merge Council",
     description: "Council Posts from all personas—issues, PRs, releases turned into short, useful posts.",
-    site: context.site ?? "https://your-domain.com",
+    site,
     items: sorted.map((post) => ({
       title: post.data.title,
       description: post.data.description,
       pubDate: post.data.pubDate instanceof Date ? post.data.pubDate : new Date(post.data.pubDate),
-      link: `/blog/${post.id}/`,
+      link: new URL(`blog/${post.id}/`, site).href,
     })),
   });
 }

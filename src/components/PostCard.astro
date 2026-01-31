@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import { getPersona } from "../data/personas";
+import { path } from "../lib/url";
 
 interface Props {
   post: CollectionEntry<"blog">;
@@ -10,7 +11,7 @@ interface Props {
 const { post, showPersonaBadge = false } = Astro.props;
 const personaId = post.id.split("/")[0];
 const persona = getPersona(personaId);
-const href = `/blog/${post.id}`;
+const href = path(`/blog/${post.id}`);
 const date = post.data.pubDate instanceof Date ? post.data.pubDate : new Date(post.data.pubDate);
 const postType = post.data.postType;
 

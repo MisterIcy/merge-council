@@ -2,6 +2,7 @@
 import CouncilLayout from "../../layouts/CouncilLayout.astro";
 import PersonaLayout from "../../layouts/PersonaLayout.astro";
 import PostCard from "../../components/PostCard.astro";
+import { path } from "../../lib/url";
 import { getCollection, getEntry, render } from "astro:content";
 import { PERSONA_IDS, getPersonaOrThrow } from "../../data/personas";
 
@@ -51,7 +52,7 @@ if (kind === "index") {
   const { id } = Astro.props;
   postEntry = await getEntry("blog", id);
   if (!postEntry) {
-    return Astro.redirect("/404");
+    return Astro.redirect(path("/404"));
   }
   const rendered = await render(postEntry);
   PostContent = rendered.Content;
@@ -80,7 +81,7 @@ if (kind === "index") {
             const p = getPersonaOrThrow(id);
             return (
               <a
-                href={`/blog/${id}`}
+                href={path(`/blog/${id}`)}
                 class="group block rounded-xl border border-zinc-800 bg-zinc-900/50 p-5 transition hover:border-cyan-500/40 hover:bg-zinc-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400"
                 style={`--card-accent: ${p.theme.accent}`}
               >
@@ -120,7 +121,7 @@ if (kind === "index") {
       title={`${personaData.name} | Merge Council Blog`}
       description={personaData.focus}
       persona={personaId}
-      breadcrumbs={[{ label: "Blog", href: "/blog" }, { label: personaData.name, href: `/blog/${personaId}` }]}
+      breadcrumbs={[{ label: "Blog", href: path("/blog") }, { label: personaData.name, href: path(`/blog/${personaId}`) }]}
     >
       <div class={`persona-index persona-index--${personaId}`}>
         <h1>{personaData.name}</h1>
@@ -150,9 +151,9 @@ if (kind === "index") {
   const pubDate = entry.data.pubDate instanceof Date ? entry.data.pubDate : new Date(entry.data.pubDate);
   const updatedDate = entry.data.updatedDate ? (entry.data.updatedDate instanceof Date ? entry.data.updatedDate : new Date(entry.data.updatedDate)) : undefined;
   const breadcrumbs = [
-    { label: "Blog", href: "/blog" },
-    { label: personaData.name, href: `/blog/${personaId}` },
-    { label: entry.data.title, href: `/blog/${entry.id}` },
+    { label: "Blog", href: path("/blog") },
+    { label: personaData.name, href: path(`/blog/${personaId}`) },
+    { label: entry.data.title, href: path(`/blog/${entry.id}`) },
   ];
   return (
     <PersonaLayout
@@ -179,7 +180,7 @@ if (kind === "index") {
           <PostContent />
         </div>
         <footer class="post-footer">
-          <a href={`/blog/${personaId}`}>More from {personaData.name}</a>
+          <a href={path(`/blog/${personaId}`)}>More from {personaData.name}</a>
         </footer>
       </article>
     </PersonaLayout>

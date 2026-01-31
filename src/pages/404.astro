@@ -1,5 +1,6 @@
 ---
 import CouncilLayout from "../layouts/CouncilLayout.astro";
+import { path } from "../lib/url";
 ---
 
 <CouncilLayout
@@ -15,9 +16,9 @@ import CouncilLayout from "../layouts/CouncilLayout.astro";
       The page you're looking for doesn't exist or has moved.
     </p>
     <p class="mt-6">
-      <a href="/" class="text-cyan-400 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400">Go home</a>
+      <a href={path("/")} class="text-cyan-400 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400">Go home</a>
       <span class="mx-2 text-zinc-600">·</span>
-      <a href="/blog" class="text-cyan-400 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400">Browse the blog</a>
+      <a href={path("/blog")} class="text-cyan-400 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400">Browse the blog</a>
     </p>
   </div>
 </CouncilLayout>

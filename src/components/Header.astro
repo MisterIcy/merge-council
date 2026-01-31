@@ -1,4 +1,6 @@
 ---
+import { path } from "../lib/url";
+
 interface Props {
   current?: string;
 }
@@ -6,20 +8,20 @@ interface Props {
 const { current } = Astro.props;
 
 const navItems = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/blog", label: "Blog" },
+  { href: path("/"), label: "Home" },
+  { href: path("/about"), label: "About" },
+  { href: path("/blog"), label: "Blog" },
 ];
 ---
 
 <header class="sticky top-0 z-50 border-b border-zinc-800/80 bg-zinc-950/80 backdrop-blur-md">
   <div class="mx-auto flex max-w-4xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-    <a href="/" class="font-mono text-sm font-semibold text-cyan-400 transition hover:text-cyan-300">
+    <a href={path("/")} class="font-mono text-sm font-semibold text-cyan-400 transition hover:text-cyan-300">
       Merge Council
     </a>
     <nav aria-label="Main" class="flex gap-6">
       {navItems.map(({ href, label }) => {
-        const isCurrent = (href === "/" && current === "home") || (href !== "/" && current === label.toLowerCase());
+        const isCurrent = (href === path("/") && current === "home") || (href !== path("/") && current === label.toLowerCase());
         return (
           <a
             href={href}
