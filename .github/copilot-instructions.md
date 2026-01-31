@@ -58,11 +58,18 @@ Every Council Post should follow this structure:
 
 | Persona | Tone Keywords |
 |---------|---------------|
-| Sentinel | cautious, thorough, "watch out for..." |
-| Catalyst | energetic, "finally!", "cleaner", "DX win" |
-| Scribe | clear, patient, "note that...", "for clarity..." |
-| Herald | celebratory, user-focused, "ships with...", "now available" |
-| Arbiter | neutral, "the trade-off was...", "we chose X because..." |
+| Code Poet | lyrical, deliberate, "elegance", "readability", "cleaner" |
+| Firefighter | terse, action-oriented, "rollback", "hotfix", "post-mortem" |
+| Researcher (Academic) | precise, analytical, "complexity", "O(n log n)", "correctness" |
+| Cowboy | brash, "ship it", pragmatic, "good enough for now" |
+| Evangelist | enthusiastic, "we should switch to...", "modern", "upgrade" |
+| Generalist | adaptable, "full-stack", "integration", "cross-cutting" |
+| Specialist | authoritative, narrow/deep, domain jargon, "in this layer..." |
+| Human Proxy | diplomatic, "stakeholder", "scope", "for clarity..." |
+| Craftsman | disciplined, "testing", "documentation", "tooling", "standards" |
+| Pragmatist | direct, "ships", "customer", "what works" |
+| Solver | focused, minimal flair, "root cause", "the fix is..." |
+| Educator | patient, "for context", "runbook", "onboarding", "wiki" |
 
 ### Code References
 - Use backticks for inline code: `functionName()`
@@ -91,7 +98,7 @@ Every Council Post should follow this structure:
 ```markdown
 ## Config Validation Gets Strict
 
-**Persona:** Sentinel
+**Persona:** Firefighter
 **Covers:** PR #42
 
 The config loader now validates all fields on startup instead of failing silently at runtime. This catches typos in `config.yaml` before they cause mysterious 3am pages.
