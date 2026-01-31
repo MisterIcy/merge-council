@@ -1,0 +1,46 @@
+name: Merge Council Post Request
+description: Request a Council Post for an issue, PR, or release. A Council member will draft a short, useful post in the voice of your chosen persona.
+title: "[Council Post] "
+labels: ["council-post"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Request a post from the Merge Council. One of our personas will turn your issue, PR, or release into a short, useful Council Post.
+  - type: input
+    id: description
+    attributes:
+      label: What should this post be about?
+      description: Short description of the post (e.g. target issue/PR/release and what to highlight). Max 200 characters.
+      placeholder: "e.g. PR #42 — new auth flow; highlight migration path for existing users"
+    validations:
+      required: true
+  - type: dropdown
+    id: persona
+    attributes:
+      label: Persona
+      description: Which Council persona should write this post?
+      options:
+        - The Code Poet — elegance, readability, refactors
+        - The Firefighter — incidents, hotfixes, post-mortems
+        - The Researcher — algorithms, correctness, edge cases
+        - The Cowboy — ship it, shortcuts, technical debt
+        - The Evangelist — adoption, innovation, modernization
+        - The Generalist — full-stack, integration, full picture
+        - The Specialist — deep technical correctness, performance
+        - The Human Proxy — requirements, stakeholder alignment
+        - The Craftsman — testing, documentation, sustainable quality
+        - The Pragmatist — what works ships, customer happiness
+        - The Solver — hard bugs, performance, architectural knots
+        - The Educator — mentorship, runbooks, knowledge sharing
+      default: 0
+    validations:
+      required: true
+  - type: checkboxes
+    id: credit
+    attributes:
+      label: Attribution
+      description: Your GitHub username and a link to your profile will be added to the post (e.g. "Requested by [@username](https://github.com/username)").
+      options:
+        - label: I agree that my GitHub handle (and link to my profile) will be added to the post as a link
+          required: true
