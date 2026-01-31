@@ -1,12 +1,25 @@
 # The Merge Council
 
-The Merge Council is an AI-run engineering blog (in-repo) where a cast of distinct personas turns real repo activity—issues, pull requests, and releases—into short, useful, slightly witty "Council Posts." Think: changelog storytelling + technical context + decisions/impact.
+This repository is a **blog-on-request** workflow: **anyone** can open an **issue** to request a blog post. An **agent** (e.g. GitHub Copilot coding agent) will **write the post** from the issue’s input and **open a PR** that adds the new post to the site.
 
-Each persona has a different voice and focus. The output is always grounded in the repo's actual facts (PR diffs, issue text, release notes) and never invents details.
+- **Not** about blogging *for* the repo itself, or *about* the code in the repo.
+- **About:** getting **input via an issue** (topic, persona, key points) → **agent writes the post** → **agent creates a PR** with the new post file.
+
+Optional **personas** (Code Poet, Firefighter, etc.) give the post a distinct voice; the content is driven by **what the requester asks for** in the issue.
+
+---
+
+## How It Works
+
+1. **Requester** opens an issue (using the “Merge Council Post Request” template or with the `council-post` label) and describes the wanted post: topic, optional persona, key points, context.
+2. **Agent** reads the issue, writes the blog post in the requested voice (or default), and opens a **PR** that adds the new post under `src/content/blog/<persona>/<slug>.md`.
+3. **Maintainers** review and merge the PR; the post appears on the blog.
 
 ---
 
 ## Personas
+
+When writing a post, the agent can adopt one of these voices. The **issue** specifies which persona (if any) to use.
 
 ### 1. **The Code Poet** — Elegance Over "Good Enough"
 *Voice:* Lyrical, deliberate, perfectionist; values beauty and clarity over speed.
@@ -58,53 +71,37 @@ Each persona has a different voice and focus. The output is always grounded in t
 
 ---
 
-## When to Write a Council Post
-
-A Council Post should be written when:
-
-| Trigger | Post Type |
-|---------|-----------|
-| **Issue opened** | Context-setting post explaining the problem and initial thinking |
-| **PR merged** | Summary of what changed, why, and what to watch for |
-| **Release published** | Changelog narrative highlighting key changes for users |
-
-Not every issue or PR needs a post—focus on changes that are significant, complex, or user-impacting.
-
----
-
 ## How to Request a Post
 
 ### Option 1: Use the Issue Template
-1. Create a new issue using the **"Merge Council Post Request"** template
-2. Fill in the target (issue/PR/release), desired persona, key points, and context
-3. Label the issue with `council-post`
+1. Create a new issue using the **"Merge Council Post Request"** template.
+2. Fill in **what you want the post to be about** (topic, key points, context) and choose a persona.
+3. The issue is labeled `council-post`; an agent will pick it up, write the post, and open a PR.
 
 ### Option 2: Add a Label
-- Add the `council-post` label to any existing issue, PR, or release discussion
-- A Council member will pick it up and draft a post
+- Add the `council-post` label to any issue that describes a wanted blog post.
+- An agent will write the post from the issue content and open a PR.
 
 ### Option 3: Comment Trigger
-- Comment `/council-post` on any issue or PR to request a post
-- Optionally specify persona: `/council-post @Firefighter` or `/council-post @CodePoet`
+- Comment `/council-post` on an issue to request a post for that issue’s topic.
+- Optionally specify persona: `/council-post @Firefighter` or `/council-post @CodePoet`.
 
 ---
 
-## Post Output Location
+## Post Output
 
-Council Posts are written as:
-- **Issue comments** (for issue/PR context posts)
-- **Release notes sections** (for release announcements)
-- **Files in `/council-posts/`** (for longer-form or archival posts)
+- The agent adds the new post under **`src/content/blog/<persona>/<slug>.md`** and opens a **PR**.
+- The PR is the deliverable; no separate “blogging about the repo” or automatic posts from repo activity—only posts requested via issues.
 
 ---
 
-## Principles
+## Principles (for the agent)
 
-1. **Fact-grounded** — Every claim must trace back to actual repo content
-2. **Concise** — Respect the reader's time; aim for signal over noise
-3. **Persona-consistent** — Stay in character; let the voice add flavor without obscuring meaning
-4. **Actionable** — End with what the reader should do or watch for
+1. **Driven by the issue** — Topic, angle, and key points come from the requester’s issue; don’t invent a different brief.
+2. **Concise** — Respect the reader’s time; aim for signal over noise.
+3. **Persona-consistent** — Use the requested persona’s voice; let it add flavor without obscuring meaning.
+4. **Actionable** — Where useful, end with what the reader should do or watch for.
 
 ---
 
-*The Council convenes. The code speaks. We translate.*
+*Anyone can request a post. The agent writes it and opens a PR.*
