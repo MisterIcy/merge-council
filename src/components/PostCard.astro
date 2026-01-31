@@ -1,0 +1,54 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { getPersona } from "../data/personas";
+
+interface Props {
+  post: CollectionEntry<"blog">;
+  showPersonaBadge?: boolean;
+}
+
+const { post, showPersonaBadge = false } = Astro.props;
+const personaId = post.id.split("/")[0];
+const persona = getPersona(personaId);
+const href = `/blog/${post.id}`;
+const date = post.data.pubDate instanceof Date ? post.data.pubDate : new Date(post.data.pubDate);
+const postType = post.data.postType;
+
+const typeStyles: Record<string, string> = {
+  issue: "bg-blue-500/15 text-blue-400 border-blue-500/30",
+  pr: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
+  release: "bg-amber-500/15 text-amber-400 border-amber-500/30",
+};
+const typeClass = postType ? typeStyles[postType] ?? "bg-zinc-700/50 text-zinc-400 border-zinc-600" : "";
+---
+
+<article class="post-card group">
+  <h2 class="text-lg font-semibold text-zinc-100">
+    <a
+      href={href}
+      class="text-zinc-100 hover:text-cyan-400 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400"
+    >
+      {post.data.title}
+    </a>
+  </h2>
+  <div class="mt-1 flex flex-wrap items-center gap-2">
+    {persona && (
+      <p class="text-sm text-zinc-500">
+        {showPersonaBadge ? `By ${persona.name}` : persona.name}
+      </p>
+    )}
+    {postType && (
+      <span class={`inline-block rounded border px-2 py-0.5 font-mono text-xs uppercase tracking-wider ${typeClass}`}>
+        {postType}
+      </span>
+    )}
+  </div>
+  <p class="mt-2 text-sm leading-relaxed text-zinc-400">
+    {post.data.description}
+  </p>
+  <p class="mt-2 text-xs text-zinc-500">
+    <time datetime={date.toISOString()}>
+      {date.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}
+    </time>
+  </p>
+</article>

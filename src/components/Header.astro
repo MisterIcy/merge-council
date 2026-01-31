@@ -1,0 +1,37 @@
+---
+interface Props {
+  current?: string;
+}
+
+const { current } = Astro.props;
+
+const navItems = [
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About" },
+  { href: "/blog", label: "Blog" },
+];
+---
+
+<header class="sticky top-0 z-50 border-b border-zinc-800/80 bg-zinc-950/80 backdrop-blur-md">
+  <div class="mx-auto flex max-w-4xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+    <a href="/" class="font-mono text-sm font-semibold text-cyan-400 transition hover:text-cyan-300">
+      Merge Council
+    </a>
+    <nav aria-label="Main" class="flex gap-6">
+      {navItems.map(({ href, label }) => {
+        const isCurrent = (href === "/" && current === "home") || (href !== "/" && current === label.toLowerCase());
+        return (
+          <a
+            href={href}
+            class:list={[
+              "text-sm font-medium transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400",
+              isCurrent ? "text-zinc-100" : "text-zinc-500 hover:text-zinc-300",
+            ]}
+          >
+            {label}
+          </a>
+        );
+      })}
+    </nav>
+  </div>
+</header>

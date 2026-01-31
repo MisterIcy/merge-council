@@ -1,0 +1,187 @@
+---
+import CouncilLayout from "../../layouts/CouncilLayout.astro";
+import PersonaLayout from "../../layouts/PersonaLayout.astro";
+import PostCard from "../../components/PostCard.astro";
+import { getCollection, getEntry, render } from "astro:content";
+import { PERSONA_IDS, getPersonaOrThrow } from "../../data/personas";
+
+export async function getStaticPaths() {
+  const allEntries = await getCollection("blog", ({ data }) => data.draft !== true);
+  const paths: { params: { slug?: string }; props: { kind: "index" } | { kind: "persona"; persona: string } | { kind: "post"; id: string } }[] = [];
+
+  paths.push({ params: { slug: "" }, props: { kind: "index" } });
+
+  for (const personaId of PERSONA_IDS) {
+    paths.push({ params: { slug: personaId }, props: { kind: "persona", persona: personaId } });
+  }
+
+  for (const entry of allEntries) {
+    paths.push({ params: { slug: entry.id }, props: { kind: "post", id: entry.id } });
+  }
+
+  return paths;
+}
+
+const { slug } = Astro.params;
+const { kind } = Astro.props;
+
+let indexPosts: Awaited<ReturnType<typeof getCollection<"blog">>> = [];
+let personaId = "";
+let personaPosts: Awaited<ReturnType<typeof getCollection<"blog">>> = [];
+let postEntry: Awaited<ReturnType<typeof getEntry<"blog">>> | undefined;
+let PostContent: Awaited<ReturnType<typeof render>>["Content"] | null = null;
+
+if (kind === "index") {
+  const all = await getCollection("blog", ({ data }) => data.draft !== true);
+  indexPosts = all.sort((a, b) => {
+    const da = a.data.pubDate instanceof Date ? a.data.pubDate : new Date(a.data.pubDate);
+    const db = b.data.pubDate instanceof Date ? b.data.pubDate : new Date(b.data.pubDate);
+    return db.getTime() - da.getTime();
+  });
+} else if (kind === "persona") {
+  const { persona } = Astro.props;
+  personaId = persona;
+  const all = await getCollection("blog", ({ id, data }) => id.startsWith(`${persona}/`) && data.draft !== true);
+  personaPosts = all.sort((a, b) => {
+    const da = a.data.pubDate instanceof Date ? a.data.pubDate : new Date(a.data.pubDate);
+    const db = b.data.pubDate instanceof Date ? b.data.pubDate : new Date(b.data.pubDate);
+    return db.getTime() - da.getTime();
+  });
+} else {
+  const { id } = Astro.props;
+  postEntry = await getEntry("blog", id);
+  if (!postEntry) {
+    return Astro.redirect("/404");
+  }
+  const rendered = await render(postEntry);
+  PostContent = rendered.Content;
+  personaId = id.split("/")[0];
+}
+---
+
+{kind === "index" && (
+  <CouncilLayout
+    title="Blog | Merge Council"
+    description="Council Posts from all personas—issues, PRs, releases turned into short, useful posts."
+    current="blog"
+  >
+    <div class="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
+      <h1 class="text-3xl font-bold tracking-tight text-zinc-50 sm:text-4xl">
+        Council Blog
+      </h1>
+      <p class="mt-4 max-w-2xl text-zinc-400">
+        All Council Posts, by persona and date. Pick an agent below or scroll to the feed.
+      </p>
+
+      <section aria-label="Council personas" class="mt-12">
+        <h2 id="council-personas" class="sr-only">Council (12 personas)</h2>
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {PERSONA_IDS.map((id) => {
+            const p = getPersonaOrThrow(id);
+            return (
+              <a
+                href={`/blog/${id}`}
+                class="group block rounded-xl border border-zinc-800 bg-zinc-900/50 p-5 transition hover:border-cyan-500/40 hover:bg-zinc-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400"
+                style={`--card-accent: ${p.theme.accent}`}
+              >
+                <span class="font-mono text-xs uppercase tracking-widest text-zinc-500">Council</span>
+                <span class="mt-1 block font-semibold text-zinc-100 group-hover:text-cyan-400">{p.name}</span>
+                <span class="mt-1 block text-sm leading-snug text-zinc-500">{p.focus}</span>
+              </a>
+            );
+          })}
+        </div>
+      </section>
+
+      <section aria-labelledby="all-posts" class="mt-16">
+        <h2 id="all-posts" class="text-xl font-semibold tracking-tight text-zinc-100">
+          All posts
+        </h2>
+        {indexPosts.length > 0 ? (
+          <ul class="mt-6 space-y-6 divide-y divide-zinc-800">
+            {indexPosts.map((post) => (
+              <li class="pt-6 first:pt-0">
+                <PostCard post={post} showPersonaBadge />
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p class="mt-4 text-zinc-500">No posts yet.</p>
+        )}
+      </section>
+    </div>
+  </CouncilLayout>
+)}
+
+{kind === "persona" && (() => {
+  const personaData = getPersonaOrThrow(personaId);
+  return (
+    <PersonaLayout
+      title={`${personaData.name} | Merge Council Blog`}
+      description={personaData.focus}
+      persona={personaId}
+      breadcrumbs={[{ label: "Blog", href: "/blog" }, { label: personaData.name, href: `/blog/${personaId}` }]}
+    >
+      <div class={`persona-index persona-index--${personaId}`}>
+        <h1>{personaData.name}</h1>
+        <p class="focus">{personaData.focus}</p>
+        <section aria-labelledby="posts">
+          <h2 id="posts">Posts</h2>
+          {personaPosts.length > 0 ? (
+            <ul class="space-y-6 divide-y divide-[var(--persona-border)]">
+              {personaPosts.map((post) => (
+                <li class="pt-6 first:pt-0">
+                  <PostCard post={post} />
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p class="muted">No posts from this persona yet.</p>
+          )}
+        </section>
+      </div>
+    </PersonaLayout>
+  );
+})()}
+
+{kind === "post" && postEntry && PostContent && (() => {
+  const personaData = getPersonaOrThrow(personaId);
+  const entry = postEntry!;
+  const pubDate = entry.data.pubDate instanceof Date ? entry.data.pubDate : new Date(entry.data.pubDate);
+  const updatedDate = entry.data.updatedDate ? (entry.data.updatedDate instanceof Date ? entry.data.updatedDate : new Date(entry.data.updatedDate)) : undefined;
+  const breadcrumbs = [
+    { label: "Blog", href: "/blog" },
+    { label: personaData.name, href: `/blog/${personaId}` },
+    { label: entry.data.title, href: `/blog/${entry.id}` },
+  ];
+  return (
+    <PersonaLayout
+      title={`${entry.data.title} | Merge Council`}
+      description={entry.data.description}
+      persona={personaId}
+      breadcrumbs={breadcrumbs}
+      ogType="article"
+      articlePublishedTime={pubDate.toISOString()}
+      articleModifiedTime={updatedDate?.toISOString()}
+    >
+      <article class={`persona-post persona-post--${personaId}`}>
+        <header>
+          <h1>{entry.data.title}</h1>
+          <p class="meta">
+            <span>By {personaData.name}</span>
+            {" · "}
+            <time datetime={entry.data.pubDate instanceof Date ? entry.data.pubDate.toISOString() : new Date(entry.data.pubDate).toISOString()}>
+              {entry.data.pubDate instanceof Date ? entry.data.pubDate.toLocaleDateString("en-US") : new Date(entry.data.pubDate).toLocaleDateString("en-US")}
+            </time>
+          </p>
+        </header>
+        <div class="prose">
+          <PostContent />
+        </div>
+        <footer class="post-footer">
+          <a href={`/blog/${personaId}`}>More from {personaData.name}</a>
+        </footer>
+      </article>
+    </PersonaLayout>
+  );
+})()}

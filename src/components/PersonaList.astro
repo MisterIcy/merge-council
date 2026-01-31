@@ -1,0 +1,17 @@
+---
+import { personas } from "../data/personas";
+---
+
+<ul class="space-y-4" aria-label="Council personas">
+  {personas.map((p) => (
+    <li>
+      <a
+        href={`/blog/${p.id}`}
+        class="font-medium text-cyan-400 hover:text-cyan-300 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400"
+      >
+        {p.name}
+      </a>
+      <span class="text-zinc-500"> — {p.focus}</span>
+    </li>
+  ))}
+</ul>

@@ -1,0 +1,46 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { getPersona } from "../data/personas";
+import "../styles/personas.css";
+
+interface Props {
+  title: string;
+  description?: string;
+  persona: string;
+  breadcrumbs?: { label: string; href: string }[];
+  ogType?: "website" | "article";
+  articlePublishedTime?: string;
+  articleModifiedTime?: string;
+}
+
+const { title, description, persona, breadcrumbs = [], ogType, articlePublishedTime, articleModifiedTime } = Astro.props;
+getPersona(persona); // validate persona exists
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  ogType={ogType}
+  articlePublishedTime={articlePublishedTime}
+  articleModifiedTime={articleModifiedTime}
+>
+  <div data-persona={persona} class="flex min-h-screen flex-col bg-[var(--persona-bg)] text-[var(--persona-fg)]">
+    <Header current="blog" />
+    <main id="main" class="mx-auto w-full max-w-3xl flex-1 px-4 py-8 sm:px-6 lg:px-8">
+      {breadcrumbs.length > 0 && (
+        <nav aria-label="Breadcrumb" class="mb-6 text-sm text-[var(--persona-fg)]">
+          {breadcrumbs.map((b, i) => (
+            <>
+              {i > 0 && <span class="mx-2 opacity-60">/</span>}
+              <a href={b.href} class="text-[var(--persona-link)] hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--persona-accent)]">{b.label}</a>
+            </>
+          ))}
+        </nav>
+      )}
+      <slot />
+    </main>
+    <Footer />
+  </div>
+</BaseLayout>

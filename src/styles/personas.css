@@ -1,0 +1,541 @@
+/* Persona themes — one block per Council member. WCAG contrast ensured. */
+
+[data-persona="code-poet"] {
+  --persona-accent: #3d3a5c;
+  --persona-border: rgba(61, 58, 92, 0.25);
+  --persona-bg: #fafaf8;
+  --persona-fg: #1f1f1f;
+  --font-heading: Georgia, "Times New Roman", serif;
+  --font-body: system-ui, sans-serif;
+  --persona-link: #3d3a5c;
+}
+
+[data-persona="firefighter"] {
+  --persona-accent: #f59e0b;
+  --persona-border: rgba(245, 158, 11, 0.35);
+  --persona-bg: #1a1a1a;
+  --persona-fg: #f4f4f5;
+  --font-heading: system-ui, sans-serif;
+  --font-body: system-ui, sans-serif;
+  --persona-link: #fbbf24;
+}
+
+[data-persona="researcher"] {
+  --persona-accent: #1e40af;
+  --persona-border: rgba(30, 64, 175, 0.25);
+  --persona-bg: #f8f9fa;
+  --persona-fg: #1e293b;
+  --font-heading: system-ui, sans-serif;
+  --font-body: ui-monospace, monospace;
+  --persona-link: #2563eb;
+}
+
+[data-persona="cowboy"] {
+  --persona-accent: #b45309;
+  --persona-border: rgba(180, 83, 9, 0.3);
+  --persona-bg: #f5f0e8;
+  --persona-fg: #292524;
+  --font-heading: system-ui, sans-serif;
+  --font-body: system-ui, sans-serif;
+  --persona-link: #b45309;
+}
+
+[data-persona="evangelist"] {
+  --persona-accent: #8b5cf6;
+  --persona-border: rgba(139, 92, 246, 0.35);
+  --persona-bg: #0f0f12;
+  --persona-fg: #e4e4e7;
+  --font-heading: system-ui, sans-serif;
+  --font-body: system-ui, sans-serif;
+  --persona-link: #a78bfa;
+}
+
+[data-persona="generalist"] {
+  --persona-accent: #0ea5e9;
+  --persona-accent-2: #10b981;
+  --persona-border: rgba(14, 165, 233, 0.25);
+  --persona-bg: #ffffff;
+  --persona-fg: #334155;
+  --font-heading: system-ui, sans-serif;
+  --font-body: system-ui, sans-serif;
+  --persona-link: #0284c7;
+}
+
+[data-persona="specialist"] {
+  --persona-accent: #22c55e;
+  --persona-border: rgba(34, 197, 94, 0.35);
+  --persona-bg: #0c0c0c;
+  --persona-fg: #d4d4d4;
+  --font-heading: ui-monospace, monospace;
+  --font-body: ui-monospace, monospace;
+  --persona-link: #4ade80;
+}
+
+[data-persona="human-proxy"] {
+  --persona-accent: #475569;
+  --persona-border: rgba(71, 85, 105, 0.25);
+  --persona-bg: #f8fafc;
+  --persona-fg: #334155;
+  --font-heading: system-ui, sans-serif;
+  --font-body: system-ui, sans-serif;
+  --persona-link: #64748b;
+}
+
+[data-persona="craftsman"] {
+  --persona-accent: #b45309;
+  --persona-border: rgba(180, 83, 9, 0.25);
+  --persona-bg: #faf8f5;
+  --persona-fg: #292524;
+  --font-heading: Georgia, "Times New Roman", serif;
+  --font-body: Georgia, "Times New Roman", serif;
+  --persona-link: #b45309;
+}
+
+[data-persona="pragmatist"] {
+  --persona-accent: #16a34a;
+  --persona-accent-2: #2563eb;
+  --persona-border: rgba(22, 163, 74, 0.25);
+  --persona-bg: #ffffff;
+  --persona-fg: #171717;
+  --font-heading: system-ui, sans-serif;
+  --font-body: system-ui, sans-serif;
+  --persona-link: #2563eb;
+}
+
+[data-persona="solver"] {
+  --persona-accent: #0d9488;
+  --persona-border: rgba(13, 148, 136, 0.35);
+  --persona-bg: #18181b;
+  --persona-fg: #e4e4e7;
+  --font-heading: system-ui, sans-serif;
+  --font-body: system-ui, sans-serif;
+  --persona-link: #2dd4bf;
+}
+
+[data-persona="educator"] {
+  --persona-accent: #0ea5e9;
+  --persona-border: rgba(14, 165, 233, 0.25);
+  --persona-bg: #f0fdfa;
+  --persona-fg: #134e4a;
+  --font-heading: system-ui, sans-serif;
+  --font-body: system-ui, sans-serif;
+  --persona-link: #0891b2;
+}
+
+/* Apply persona vars to main content when inside a persona layout */
+[data-persona] {
+  background-color: var(--persona-bg);
+  color: var(--persona-fg);
+  font-family: var(--font-body);
+}
+
+[data-persona] h1,
+[data-persona] h2,
+[data-persona] h3 {
+  font-family: var(--font-heading), var(--font-body);
+  color: var(--persona-fg);
+}
+
+[data-persona] a {
+  color: var(--persona-link);
+}
+
+[data-persona] a:hover {
+  text-decoration: underline;
+}
+
+/* Persona pages: header & footer use persona accent */
+[data-persona] header {
+  border-bottom-color: color-mix(in srgb, var(--persona-accent) 50%, transparent) !important;
+  background-color: color-mix(in srgb, var(--persona-bg) 95%, var(--persona-accent)) !important;
+}
+[data-persona] header a[href="/"] {
+  color: var(--persona-accent) !important;
+}
+[data-persona] header nav a {
+  color: var(--persona-fg) !important;
+  opacity: 0.85;
+}
+[data-persona] header nav a:hover {
+  opacity: 1;
+  color: var(--persona-link) !important;
+}
+[data-persona] footer {
+  border-top-color: color-mix(in srgb, var(--persona-accent) 40%, transparent) !important;
+  background-color: color-mix(in srgb, var(--persona-bg) 98%, var(--persona-accent)) !important;
+}
+[data-persona] footer a {
+  color: var(--persona-link) !important;
+}
+[data-persona] footer .font-mono {
+  color: var(--persona-fg) !important;
+  opacity: 0.8;
+}
+
+/* --- Persona index & post layout (base) --- */
+
+.persona-index h1 {
+  font-family: var(--font-heading), var(--font-body);
+  font-size: var(--text-3xl, 1.75rem);
+  font-weight: 700;
+  margin-bottom: var(--space-3, 0.75rem);
+  color: var(--persona-fg);
+}
+.persona-index .focus {
+  font-size: var(--text-lg, 1.125rem);
+  margin-bottom: var(--space-8, 2rem);
+  opacity: 0.9;
+  line-height: var(--line-relaxed, 1.65);
+  color: var(--persona-fg);
+}
+.persona-index [aria-labelledby="posts"] h2 {
+  font-family: var(--font-heading), var(--font-body);
+  font-size: var(--text-xl, 1.25rem);
+  font-weight: 600;
+  margin-top: var(--space-8, 2rem);
+  margin-bottom: var(--space-4, 1rem);
+  padding-bottom: var(--space-2, 0.5rem);
+  border-bottom: 1px solid var(--persona-border);
+  color: var(--persona-fg);
+}
+.persona-index .muted {
+  color: var(--persona-fg);
+  opacity: 0.7;
+}
+
+/* PostCard on persona pages: use persona colors */
+[data-persona] article.group h2 a {
+  color: var(--persona-link) !important;
+}
+[data-persona] article.group h2 a:hover {
+  color: var(--persona-accent) !important;
+}
+[data-persona] article.group .text-zinc-100 {
+  color: var(--persona-fg) !important;
+}
+[data-persona] article.group .text-zinc-400 {
+  color: var(--persona-fg) !important;
+  opacity: 0.9;
+}
+[data-persona] article.group .text-zinc-500 {
+  color: var(--persona-fg) !important;
+  opacity: 0.75;
+}
+
+.persona-post header {
+  margin-bottom: var(--space-6, 1.5rem);
+}
+.persona-post header h1 {
+  font-family: var(--font-heading), var(--font-body);
+  font-size: var(--text-2xl, 1.5rem);
+  font-weight: 700;
+  margin-bottom: var(--space-2, 0.5rem);
+  color: var(--persona-fg);
+}
+.persona-post .meta {
+  font-size: var(--text-sm, 0.9rem);
+  opacity: 0.9;
+  color: var(--persona-fg);
+}
+.persona-post .post-footer {
+  margin-top: var(--space-8, 2rem);
+  padding-top: var(--space-4, 1rem);
+  border-top: 1px solid var(--persona-border);
+}
+.persona-post .post-footer a {
+  color: var(--persona-link);
+  font-weight: 500;
+}
+/* Persona post prose (base) */
+[data-persona] .persona-post .prose {
+  line-height: var(--line-relaxed, 1.7);
+  max-width: 65ch;
+}
+[data-persona] .persona-post .prose :global(p) {
+  margin-bottom: var(--space-4, 1rem);
+  color: var(--persona-fg);
+}
+[data-persona] .persona-post .prose :global(h2) {
+  margin-top: var(--space-8, 2rem);
+  margin-bottom: var(--space-2, 0.5rem);
+  font-size: var(--text-xl, 1.25rem);
+  font-weight: 600;
+  font-family: var(--font-heading), var(--font-body);
+  color: var(--persona-fg);
+}
+[data-persona] .persona-post .prose :global(h3) {
+  margin-top: var(--space-6, 1.5rem);
+  margin-bottom: var(--space-2, 0.5rem);
+  font-size: var(--text-lg, 1.125rem);
+  font-weight: 600;
+  font-family: var(--font-heading), var(--font-body);
+  color: var(--persona-fg);
+}
+[data-persona] .persona-post .prose :global(ul),
+[data-persona] .persona-post .prose :global(ol) {
+  margin-bottom: var(--space-4, 1rem);
+  padding-left: 1.5em;
+  color: var(--persona-fg);
+}
+[data-persona] .persona-post .prose :global(li) {
+  margin-bottom: var(--space-2, 0.5rem);
+}
+[data-persona] .persona-post .prose :global(pre),
+[data-persona] .persona-post .prose :global(code) {
+  font-family: ui-monospace, monospace;
+  font-size: var(--text-sm, 0.875rem);
+}
+[data-persona] .persona-post .prose :global(pre) {
+  padding: var(--space-4, 1rem);
+  overflow-x: auto;
+  border-radius: 6px;
+  margin-bottom: var(--space-4, 1rem);
+  background: color-mix(in srgb, var(--persona-bg) 95%, var(--persona-accent));
+  border: 1px solid var(--persona-border);
+}
+[data-persona] .persona-post .prose :global(:not(pre) > code) {
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--persona-accent) 12%, transparent);
+  color: var(--persona-fg);
+}
+[data-persona] .persona-post .prose :global(a) {
+  color: var(--persona-link);
+}
+[data-persona] .persona-post .prose :global(blockquote) {
+  color: var(--persona-fg);
+  opacity: 0.95;
+}
+
+/* 1. Code Poet — lyrical, elegant; serif, generous whitespace */
+.persona-index--code-poet h1 {
+  font-family: Georgia, "Times New Roman", serif;
+  letter-spacing: 0.02em;
+}
+.persona-index--code-poet .focus {
+  font-style: italic;
+  letter-spacing: 0.01em;
+  max-width: 55ch;
+  margin-bottom: var(--space-10, 2.5rem);
+}
+.persona-index--code-poet [aria-labelledby="posts"] {
+  margin-top: var(--space-10, 2.5rem);
+}
+.persona-index--code-poet .post-card {
+  padding-bottom: var(--space-8, 2rem);
+  margin-bottom: var(--space-8, 2rem);
+}
+[data-persona="code-poet"] .persona-post--code-poet .prose :global(p) {
+  margin-bottom: var(--space-6, 1.5rem);
+}
+[data-persona="code-poet"] .persona-post--code-poet .prose :global(blockquote) {
+  border-left: 4px solid var(--persona-accent);
+  padding-left: var(--space-4, 1rem);
+  margin: var(--space-8, 2rem) 0;
+  font-style: italic;
+  opacity: 0.95;
+}
+
+/* 2. Firefighter — terse, incident; compact, alert accent */
+.persona-index--firefighter h1 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.persona-index--firefighter .focus {
+  font-size: var(--text-base, 1rem);
+  margin-bottom: var(--space-4, 1rem);
+}
+.persona-index--firefighter [aria-labelledby="posts"] h2 {
+  border-bottom-color: var(--persona-accent);
+  border-bottom-width: 2px;
+}
+.persona-index--firefighter .post-card {
+  padding-bottom: var(--space-4, 1rem);
+  margin-bottom: var(--space-4, 1rem);
+}
+[data-persona="firefighter"] .persona-post--firefighter header {
+  margin-bottom: var(--space-4, 1rem);
+}
+[data-persona="firefighter"] .persona-post--firefighter .meta {
+  font-size: var(--text-xs, 0.8rem);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+[data-persona="firefighter"] .persona-post--firefighter .post-footer {
+  border-top-color: color-mix(in srgb, var(--persona-accent) 50%, transparent);
+}
+
+/* 3. Researcher — precise, citations; monospace undertone */
+.persona-index--researcher .focus {
+  font-family: var(--font-body);
+  font-size: var(--text-sm, 0.9375rem);
+}
+.persona-index--researcher .post-card .meta {
+  font-variant-numeric: tabular-nums;
+}
+[data-persona="researcher"] .persona-post--researcher .prose :global(h2),
+[data-persona="researcher"] .persona-post--researcher .prose :global(h3) {
+  font-variant-numeric: tabular-nums;
+}
+[data-persona="researcher"] .persona-post--researcher .prose :global(pre) {
+  border: 1px solid var(--persona-accent);
+  background: color-mix(in srgb, var(--persona-bg) 98%, var(--persona-accent));
+}
+
+/* 4. Cowboy — brash, ship it; warm, bold, no-frills */
+.persona-index--cowboy h1 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.persona-index--cowboy .focus {
+  font-weight: 500;
+}
+[data-persona="cowboy"] .persona-post--cowboy .prose :global(blockquote) {
+  border-left: 4px solid var(--persona-accent);
+  padding-left: var(--space-4, 1rem);
+  background: color-mix(in srgb, var(--persona-accent) 8%, transparent);
+  padding: var(--space-3, 0.75rem) var(--space-4, 1rem);
+  margin: var(--space-4, 1rem) 0;
+  border-radius: 0 4px 4px 0;
+}
+
+/* 5. Evangelist — enthusiastic, future-focused; vibrant, CTA feel */
+.persona-index--evangelist h1 {
+  font-weight: 700;
+}
+.persona-index--evangelist .focus {
+  font-weight: 500;
+  opacity: 1;
+}
+.persona-index--evangelist [aria-labelledby="posts"] h2 {
+  color: var(--persona-accent);
+}
+[data-persona="evangelist"] .persona-post--evangelist header h1 {
+  font-weight: 700;
+}
+[data-persona="evangelist"] .persona-post--evangelist .post-footer {
+  border-top-color: var(--persona-accent);
+}
+[data-persona="evangelist"] .persona-post--evangelist .post-footer a {
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* 6. Generalist — full-stack, connective; two-accent */
+.persona-index--generalist [aria-labelledby="posts"] h2 {
+  border-bottom-color: var(--persona-accent-2, var(--persona-accent));
+  border-bottom-width: 2px;
+}
+[data-persona="generalist"] .persona-post--generalist .post-footer {
+  border-top: 2px solid var(--persona-accent);
+  border-image: linear-gradient(90deg, var(--persona-accent), var(--persona-accent-2)) 1;
+}
+
+/* 7. Specialist — terminal-like, deep; monospace, dense */
+.persona-index--specialist .focus {
+  font-family: var(--font-body);
+  font-size: var(--text-sm, 0.875rem);
+}
+.persona-index--specialist .post-card .meta {
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-body);
+}
+[data-persona="specialist"] .persona-post--specialist .meta {
+  font-family: var(--font-body);
+  font-variant-numeric: tabular-nums;
+}
+[data-persona="specialist"] .persona-post--specialist .prose :global(pre),
+[data-persona="specialist"] .persona-post--specialist .prose :global(code) {
+  font-family: var(--font-body);
+}
+
+/* 8. Human Proxy — diplomatic, brief; neutral, clean */
+.persona-index--human-proxy .focus {
+  font-size: var(--text-base, 1rem);
+  max-width: 60ch;
+}
+[data-persona="human-proxy"] .persona-post--human-proxy .prose :global(h2) {
+  margin-top: var(--space-6, 1.5rem);
+  padding-bottom: var(--space-2, 0.5rem);
+  border-bottom: 1px solid color-mix(in srgb, var(--persona-accent) 30%, transparent);
+}
+
+/* 9. Craftsman — quality, art; serif, warm */
+.persona-index--craftsman .focus {
+  font-family: var(--font-heading), var(--font-body);
+}
+[data-persona="craftsman"] .persona-post--craftsman .prose :global(ul) {
+  list-style-type: "– ";
+  padding-left: 1.2em;
+}
+[data-persona="craftsman"] .persona-post--craftsman .prose :global(li) {
+  margin-bottom: var(--space-3, 0.75rem);
+}
+
+/* 10. Pragmatist — outcome, shipped; checkmarks feel */
+.persona-index--pragmatist .focus {
+  font-weight: 500;
+}
+[data-persona="pragmatist"] .persona-post--pragmatist .post-footer {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+[data-persona="pragmatist"] .persona-post--pragmatist .post-footer::before {
+  content: "✓ ";
+  color: var(--persona-accent);
+  font-weight: 600;
+}
+[data-persona="pragmatist"] .persona-post--pragmatist .meta {
+  font-size: var(--text-sm, 0.9rem);
+}
+
+/* 11. Solver — puzzle, minimal; teal, clean */
+.persona-index--solver .focus {
+  font-size: var(--text-sm, 0.9375rem);
+}
+.persona-index--solver .post-card {
+  border-left: 3px solid var(--persona-accent);
+  padding-left: var(--space-4, 1rem);
+}
+[data-persona="solver"] .persona-post--solver .prose :global(pre) {
+  border-left: 4px solid var(--persona-accent);
+  border-radius: 0 4px 4px 0;
+}
+[data-persona="solver"] .persona-post--solver .prose :global(h2) {
+  font-size: var(--text-xl, 1.125rem);
+  margin-top: var(--space-6, 1.5rem);
+}
+
+/* 12. Educator — patient, runbook; step-by-step */
+.persona-index--educator .focus {
+  line-height: var(--line-relaxed, 1.7);
+  margin-bottom: var(--space-8, 2rem);
+  max-width: 60ch;
+}
+.persona-index--educator [aria-labelledby="posts"] h2 {
+  margin-top: var(--space-10, 2.5rem);
+}
+[data-persona="educator"] .persona-post--educator .prose :global(ol) {
+  counter-reset: step;
+  list-style: none;
+  padding-left: 0;
+}
+[data-persona="educator"] .persona-post--educator .prose :global(ol li) {
+  position: relative;
+  padding-left: 2.5em;
+  margin-bottom: var(--space-4, 1rem);
+}
+[data-persona="educator"] .persona-post--educator .prose :global(ol li::before) {
+  counter-increment: step;
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  font-weight: 600;
+  color: var(--persona-accent);
+  min-width: 1.5em;
+}
+[data-persona="educator"] .persona-post--educator .prose :global(p) {
+  margin-bottom: var(--space-4, 1rem);
+}
