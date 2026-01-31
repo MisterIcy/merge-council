@@ -3,9 +3,13 @@ import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
+const basePath = process.env.BASE_PATH || "/merge-council/";
+const origin = "https://mistericy.github.io";
+const site = `${origin}${basePath.replace(/^\/?/, "/").replace(/\/?$/, "/")}`;
+
 export default defineConfig({
-  site: 'https://mistericy.github.io',
-  base: process.env.BASE_PATH || '/merge-council/', // BASE_PATH set by GitHub Actions for Pages
+  site,
+  base: basePath,
   vite: {
     plugins: [tailwindcss()],
   },
